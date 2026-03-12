@@ -1,0 +1,28 @@
+
+allprojects {
+
+    group = 'com.dunnwr.taskmanagerapi'
+    version = '1.0.0-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+}
+subprojects {
+
+    apply plugin: 'java'
+
+    java {
+        sourceCompatibility = '21'
+    }
+
+    dependencies {
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher:6.0.3'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:6.0.3'
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:6.0.3'
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+}
