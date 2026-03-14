@@ -34,6 +34,22 @@ public class Task {
         this.createdAt = this.updatedAt = currentDate;
     }
 
+    private Task(Long id, String title, String description, Status status, Priority priority, Long userId, LocalDateTime dueDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.priority = priority;
+        this.userId = userId;
+        this.dueDate = dueDate;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public static Task restore(Long id, String title, String description, Status status, Priority priority, Long userId, LocalDateTime dueDate, LocalDateTime createdAt, LocalDateTime updatedAt){
+        return new Task(id, title, description, status, priority, userId, dueDate, createdAt, updatedAt);
+    }
+
     public Long getId(){
         return this.id;
     }
