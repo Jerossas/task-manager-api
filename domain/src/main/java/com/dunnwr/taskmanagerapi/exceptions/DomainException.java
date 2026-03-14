@@ -2,7 +2,14 @@ package com.dunnwr.taskmanagerapi.exceptions;
 
 public class DomainException extends RuntimeException {
 
-    public DomainException(String message){
+    private final int statusCode;
+
+    public DomainException(String message, int statusCode){
         super(message);
+        this.statusCode = statusCode;
+    }
+
+    public int getStatusCode(){
+        return this.statusCode;
     }
 }
