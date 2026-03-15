@@ -12,9 +12,10 @@ public class User {
     private final Email email;
     private Gender gender;
 
-    public User(String firstName, String lastName, Password password, Email email, Gender gender){
+    public User(String firstName, String middleName, String lastName, Password password, Email email, Gender gender){
 
         changeFirstName(firstName);
+        changeMiddleName(middleName);
         changeLastName(lastName);
         changePassword(password);
         changeGender(gender);
