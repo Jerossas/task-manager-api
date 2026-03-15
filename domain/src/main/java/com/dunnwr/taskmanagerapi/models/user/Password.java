@@ -4,42 +4,54 @@ import com.dunnwr.taskmanagerapi.exceptions.InvalidFieldException;
 
 public class Password {
 
-    private final String password;
+    private final String value;
 
-    public Password(String password) {
+    private Password (String value){
+        this.value = value;
+    }
 
-        if (password == null) {
+    public static void validate(String rawPassword) {
+
+        if (rawPassword == null) {
             throw new InvalidFieldException("password", "Password cannot be null.");
         }
 
-        if (password.isBlank()) {
+        if (rawPassword.isBlank()) {
             throw new InvalidFieldException("password", "Password cannot be empty.");
         }
 
-        if (password.length() < 8) {
+        if (rawPassword.length() < 8) {
             throw new InvalidFieldException("password", "Password must be at least 8 characters long.");
         }
 
-        if (!password.matches(".*[A-Z].*")) {
+        if (!rawPassword.matches(".*[A-Z].*")) {
             throw new InvalidFieldException("password", "Password must contain at least one uppercase letter.");
         }
 
-        if (!password.matches(".*[a-z].*")) {
+        if (!rawPassword.matches(".*[a-z].*")) {
             throw new InvalidFieldException("password", "Password must contain at least one lowercase letter.");
         }
 
-        if (!password.matches(".*\\d.*")) {
+        if (!rawPassword.matches(".*\\d.*")) {
             throw new InvalidFieldException("password", "Password must contain at least one number.");
         }
 
-        if (!password.matches(".*[@$!%*?&].*")) {
+        if (!rawPassword.matches(".*[@$!%*?&].*")) {
             throw new InvalidFieldException("password", "Password must contain at least one special character (@$!%*?&).");
         }
 
-        this.password = password;
+    }
+
+    public static Password fromEncoded(String encodedPassword){
+
+        if (encodedPassword == null) {
+            throw new InvalidFieldException("password", "Encoded password cannot be null.");
+        }
+
+        return new Password(encodedPassword);
     }
 
     public String getValue() {
-        return this.password;
+        return this.value;
     }
 }
