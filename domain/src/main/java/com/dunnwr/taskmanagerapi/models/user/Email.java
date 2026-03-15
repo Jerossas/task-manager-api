@@ -1,31 +1,43 @@
 package com.dunnwr.taskmanagerapi.models.user;
 
-import com.dunnwr.taskmanagerapi.exceptions.user.InvalidEmailException;
+import com.dunnwr.taskmanagerapi.exceptions.InvalidFieldException;
 
 public class Email {
 
     private final String email;
 
-    public Email(String email){
+    public Email(String email) {
 
-        if(email == null) {
-            throw new InvalidEmailException("Email cannot be null.");
+        if (email == null) {
+            throw new InvalidFieldException("email", "Email cannot be null.");
         }
 
-        if(email.isBlank()){
-            throw new InvalidEmailException("Email cannot be empty.");
+        if (email.isBlank()) {
+            throw new InvalidFieldException("email", "Email cannot be empty.");
         }
 
-        String regularExpression = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        if (!email.contains("@")) {
+            throw new InvalidFieldException("email", "Email must contain '@'.");
+        }
 
-        if(!email.matches(regularExpression)) {
-            throw new InvalidEmailException("Email does not meet requirements.");
+        String[] parts = email.split("@");
+
+        if (parts.length != 2 || parts[0].isBlank()) {
+            throw new InvalidFieldException("email", "Email must have a valid local part before '@'.");
+        }
+
+        if (!parts[1].contains(".")) {
+            throw new InvalidFieldException("email", "Email domain must contain a '.'.");
+        }
+
+        if (parts[1].endsWith(".") || parts[1].split("\\.")[parts[1].split("\\.").length - 1].length() < 2) {
+            throw new InvalidFieldException("email", "Email must have a valid domain extension (e.g. .com, .co).");
         }
 
         this.email = email;
     }
 
-    public String getValue(){
+    public String getValue() {
         return this.email;
     }
 }

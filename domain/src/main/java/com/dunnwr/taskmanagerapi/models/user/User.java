@@ -1,6 +1,6 @@
 package com.dunnwr.taskmanagerapi.models.user;
 
-import com.dunnwr.taskmanagerapi.exceptions.user.*;
+import com.dunnwr.taskmanagerapi.exceptions.InvalidFieldException;
 
 public class User {
 
@@ -20,7 +20,7 @@ public class User {
         changeGender(gender);
 
         if (email == null){
-            throw new InvalidEmailException("Email cannot be null");
+            throw new InvalidFieldException("email", "Email cannot be null");
         }
 
         this.email = email;
@@ -33,11 +33,11 @@ public class User {
     public void changeFirstName(String newFirstName){
 
         if(newFirstName == null) {
-            throw new InvalidFirstNameException("First name cannot be null.");
+            throw new InvalidFieldException("firstName", "First name cannot be null.");
         }
 
         if(newFirstName.isBlank()) {
-            throw new InvalidFirstNameException("First name cannot be empty.");
+            throw new InvalidFieldException("firstName", "First name cannot be empty.");
         }
 
         this.firstName = newFirstName;
@@ -58,11 +58,11 @@ public class User {
     public void changeLastName(String newLastName){
 
         if(newLastName == null) {
-            throw new InvalidLastNameException("Last name cannot be null");
+            throw new InvalidFieldException("lastName", "Last name cannot be null");
         }
 
         if(newLastName.isBlank()) {
-            throw new InvalidLastNameException("Last name cannot be empty");
+            throw new InvalidFieldException("lastName", "Last name cannot be empty");
         }
 
         this.lastName = newLastName;
@@ -75,10 +75,14 @@ public class User {
     public void changePassword(Password newPassword){
 
         if(newPassword == null) {
-            throw new InvalidPasswordException("The password cannot be null");
+            throw new InvalidFieldException("password", "The password cannot be null");
         }
 
         this.password = newPassword;
+    }
+
+    public Password getPassword() {
+        return password;
     }
 
     public Email getEmail(){
@@ -88,7 +92,7 @@ public class User {
     public void changeGender(Gender newGender){
 
         if(newGender == null){
-            throw new InvalidGenderException("Gender cannot be null.");
+            throw new InvalidFieldException("gender", "Gender cannot be null.");
         }
 
         this.gender = newGender;

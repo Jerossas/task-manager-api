@@ -1,6 +1,6 @@
 package com.dunnwr.taskmanagerapi.models.task;
 
-import com.dunnwr.taskmanagerapi.exceptions.task.*;
+import com.dunnwr.taskmanagerapi.exceptions.InvalidFieldException;
 
 import java.time.LocalDateTime;
 
@@ -24,7 +24,7 @@ public class Task {
         changeDueDate(dueDate, currentDate);
 
         if(userId == null){
-            throw new InvalidTaskOwnerException("User id cannot be null");
+            throw new InvalidFieldException("userId", "User id cannot be null");
         }
 
         this.userId = userId;
@@ -57,11 +57,11 @@ public class Task {
     public void changeTitle(String newTitle){
 
         if(newTitle == null) {
-            throw new InvalidTaskTitleException("Title cannot be null.");
+            throw new InvalidFieldException("title", "Title cannot be null.");
         }
 
         if(newTitle.isBlank()) {
-            throw new InvalidTaskTitleException("Title cannot be empty.");
+            throw new InvalidFieldException("title", "Title cannot be empty.");
         }
 
         this.title = newTitle;
@@ -75,11 +75,11 @@ public class Task {
     public void changeDescription(String newDescription){
 
         if(newDescription == null) {
-            throw new InvalidDescriptionException("Description cannot be null.");
+            throw new InvalidFieldException("description","Description cannot be null.");
         }
 
         if(newDescription.isBlank()) {
-            throw new InvalidDescriptionException("Description cannot be empty.");
+            throw new InvalidFieldException("description", "Description cannot be empty.");
         }
 
         this.description = newDescription;
@@ -97,11 +97,11 @@ public class Task {
     public void changeDueDate(LocalDateTime newDueDate, LocalDateTime currentTime){
 
         if(newDueDate == null) {
-            throw new InvalidDueDateException("Due date cannot be empty.");
+            throw new InvalidFieldException("dueDate", "Due date cannot be empty.");
         }
 
         if(newDueDate.isBefore(currentTime)) {
-            throw new InvalidDueDateException("Due date cannot be in the past.");
+            throw new InvalidFieldException("dueDate", "Due date cannot be in the past.");
         }
 
         this.dueDate = newDueDate;
@@ -115,7 +115,7 @@ public class Task {
     public void changePriority(Priority newPriority){
 
         if(newPriority == null) {
-            throw new InvalidPriorityException("Priority cannot be null.");
+            throw new InvalidFieldException("priority", "Priority cannot be null.");
         }
 
         this.priority = newPriority;
@@ -129,7 +129,7 @@ public class Task {
     public void changeStatus(Status newStatus){
 
         if(newStatus == null) {
-            throw new InvalidStatusException("Status cannot be null.");
+            throw new InvalidFieldException("status", "Status cannot be null.");
         }
 
         this.status = newStatus;
