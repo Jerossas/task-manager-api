@@ -1,4 +1,4 @@
-package com.dunnwr.taskmanagerapi.controller;
+package com.dunnwr.taskmanagerapi.controllers;
 
 import com.dunnwr.taskmanagerapi.commands.task.CreateTaskCommand;
 import com.dunnwr.taskmanagerapi.dto.task.CreateTaskRequest;
