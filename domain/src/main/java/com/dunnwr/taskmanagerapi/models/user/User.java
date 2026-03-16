@@ -2,6 +2,10 @@ package com.dunnwr.taskmanagerapi.models.user;
 
 import com.dunnwr.taskmanagerapi.exceptions.InvalidFieldException;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 public class User {
 
     private Long id;
@@ -11,6 +15,7 @@ public class User {
     private Password password;
     private final Email email;
     private Gender gender;
+    private final Set<Role> roles;
 
     public User(String firstName, String middleName, String lastName, Password password, Email email, Gender gender){
 
@@ -25,10 +30,58 @@ public class User {
         }
 
         this.email = email;
+        this.roles = new HashSet<>(Set.of(Role.USER));
+    }
+
+    private User(Long id, String firstName, String middleName, String lastName, Password password, Email email, Gender gender, Set<Role> roles) {
+        this.id = id;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.password = password;
+        this.email = email;
+        this.gender = gender;
+        this.roles = roles;
+    }
+
+    public static User restore(Long id, String firstName, String middleName, String lastName, Password password, Email email, Gender gender, Set<Role> roles){
+        return new User(
+                id,
+                firstName,
+                middleName,
+                lastName,
+                password,
+                email,
+                gender,
+                roles
+        );
     }
 
     public Long getId(){
         return this.id;
+    }
+
+    public Set<Role> getRoles(){
+        return Collections.unmodifiableSet(this.roles);
+    }
+
+    public void addRole(Role newRole){
+
+        if(newRole == null){
+            throw new InvalidFieldException("newRole", "Role cannot be null");
+        }
+
+        roles.add(newRole);
+    }
+
+    public void removeRole(Role role) {
+        if (role == null) {
+            throw new InvalidFieldException("role", "Role cannot be null.");
+        }
+        if (role == Role.USER) {
+            throw new InvalidFieldException("role", "Cannot remove the USER role.");
+        }
+        roles.remove(role);
     }
 
     public void changeFirstName(String newFirstName){
