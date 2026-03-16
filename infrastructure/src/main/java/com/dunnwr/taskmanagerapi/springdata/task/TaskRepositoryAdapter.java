@@ -25,9 +25,7 @@ public class TaskRepositoryAdapter implements TaskRepository {
                 task.getStatus().name(),
                 task.getPriority().name(),
                 task.getOwnerId(),
-                task.getDueDate(),
-                task.getCreationDate(),
-                task.getLastModificationDate()
+                task.getDueDate()
         );
 
         TaskEntity savedEntity = springDataTaskRepository.save(newTask);
@@ -39,9 +37,7 @@ public class TaskRepositoryAdapter implements TaskRepository {
                 Status.from(savedEntity.getStatus()),
                 Priority.from(savedEntity.getPriority()),
                 savedEntity.getUserId(),
-                savedEntity.getDueDate(),
-                savedEntity.getCreatedAt(),
-                savedEntity.getUpdatedAt()
+                savedEntity.getDueDate()
         );
     }
 }

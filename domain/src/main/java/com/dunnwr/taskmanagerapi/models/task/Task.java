@@ -13,8 +13,6 @@ public class Task {
     private Priority priority;
     private final Long userId;
     private LocalDateTime dueDate;
-    private final LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
     public Task(String title, String description, Priority priority, LocalDateTime dueDate, Long userId, LocalDateTime currentDate){
 
@@ -30,11 +28,9 @@ public class Task {
         this.userId = userId;
 
         this.status = Status.NEW;
-
-        this.createdAt = this.updatedAt = currentDate;
     }
 
-    private Task(Long id, String title, String description, Status status, Priority priority, Long userId, LocalDateTime dueDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    private Task(Long id, String title, String description, Status status, Priority priority, Long userId, LocalDateTime dueDate) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -42,12 +38,10 @@ public class Task {
         this.priority = priority;
         this.userId = userId;
         this.dueDate = dueDate;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
-    public static Task restore(Long id, String title, String description, Status status, Priority priority, Long userId, LocalDateTime dueDate, LocalDateTime createdAt, LocalDateTime updatedAt){
-        return new Task(id, title, description, status, priority, userId, dueDate, createdAt, updatedAt);
+    public static Task restore(Long id, String title, String description, Status status, Priority priority, Long userId, LocalDateTime dueDate){
+        return new Task(id, title, description, status, priority, userId, dueDate);
     }
 
     public Long getId(){
@@ -65,7 +59,6 @@ public class Task {
         }
 
         this.title = newTitle;
-        updateModificationDate();
     }
 
     public String getTitle(){
@@ -83,7 +76,6 @@ public class Task {
         }
 
         this.description = newDescription;
-        updateModificationDate();
     }
 
     public String getDescription(){
@@ -105,7 +97,6 @@ public class Task {
         }
 
         this.dueDate = newDueDate;
-        updateModificationDate();
     }
 
     public LocalDateTime getDueDate(){
@@ -119,7 +110,6 @@ public class Task {
         }
 
         this.priority = newPriority;
-        updateModificationDate();
     }
 
     public Priority getPriority(){
@@ -133,22 +123,10 @@ public class Task {
         }
 
         this.status = newStatus;
-        updateModificationDate();
     }
 
     public Status getStatus(){
         return this.status;
     }
 
-    public LocalDateTime getCreationDate(){
-        return this.createdAt;
-    }
-
-    private void updateModificationDate(){
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    public LocalDateTime getLastModificationDate(){
-        return this.updatedAt;
-    }
 }

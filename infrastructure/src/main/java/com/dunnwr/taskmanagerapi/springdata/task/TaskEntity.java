@@ -1,6 +1,8 @@
 package com.dunnwr.taskmanagerapi.springdata.task;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -19,12 +21,16 @@ public class TaskEntity {
     @Column(name = "user_id")
     private Long userId;
     private LocalDateTime dueDate;
+
+    @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     public TaskEntity(){}
 
-    public TaskEntity(Long id, String title, String description, String status, String priority, Long userId, LocalDateTime dueDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public TaskEntity(Long id, String title, String description, String status, String priority, Long userId, LocalDateTime dueDate) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -32,8 +38,6 @@ public class TaskEntity {
         this.priority = priority;
         this.userId = userId;
         this.dueDate = dueDate;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -96,15 +100,7 @@ public class TaskEntity {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }
