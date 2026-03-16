@@ -16,8 +16,8 @@ import org.springframework.context.annotation.Configuration;
 public class UseCaseConfiguration {
 
     @Bean
-    public CreateTaskUseCase createTaskUseCase(TaskRepository taskRepository){
-        return new CreateTaskUseCaseImpl(taskRepository);
+    public CreateTaskUseCase createTaskUseCase(TaskRepository taskRepository, UserRepository userRepository){
+        return new CreateTaskUseCaseImpl(taskRepository, userRepository);
     }
 
     @Bean

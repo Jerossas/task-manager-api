@@ -8,6 +8,8 @@ import com.dunnwr.taskmanagerapi.models.task.Task;
 import com.dunnwr.taskmanagerapi.usecases.task.CreateTaskUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,16 +26,14 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<TaskResponse> createTask(@RequestBody CreateTaskRequest request){
-
-        // TODO: get the user id from the JWT token, not passed by the user themselves.
+    public ResponseEntity<TaskResponse> createTask(@RequestBody CreateTaskRequest request, @AuthenticationPrincipal UserDetails userDetails){
 
         CreateTaskCommand command = new CreateTaskCommand(
                 request.title(),
                 request.description(),
                 Priority.from(request.priority()),
                 request.dueDate(),
-                request.userId()
+                userDetails.getUsername()
         );
 
         Task createdTask = createTaskUseCase.execute(command);

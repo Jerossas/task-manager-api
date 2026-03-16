@@ -9,5 +9,5 @@ public record CreateTaskCommand(
     String description,
     Priority priority,
     LocalDateTime dueDate,
-    Long userId
+    String email
 ) {}
