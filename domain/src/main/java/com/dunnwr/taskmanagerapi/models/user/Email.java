@@ -6,7 +6,11 @@ public class Email {
 
     private final String email;
 
-    public Email(String email) {
+    private Email(String email){
+        this.email = email;
+    }
+
+    public static  Email of(String email) {
 
         if (email == null) {
             throw new InvalidFieldException("email", "Email cannot be null.");
@@ -34,7 +38,11 @@ public class Email {
             throw new InvalidFieldException("email", "Email must have a valid domain extension (e.g. .com, .co).");
         }
 
-        this.email = email;
+        return new Email(email);
+    }
+
+    public static Email fromStored(String email) {
+        return new Email(email);
     }
 
     public String getValue() {

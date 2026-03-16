@@ -33,7 +33,7 @@ public class SignUserInUseCaseImpl implements SignUserInUseCase {
 
         Password.validate(command.password());
 
-        Email userEmail = new Email(command.email());
+        Email userEmail = Email.of(command.email());
 
         if(userRepository.existsByEmail(userEmail)) {
             throw new EmailAlreadyRegisteredException("Email " + userEmail.getValue() + " is already registered. Try with a different one.");
