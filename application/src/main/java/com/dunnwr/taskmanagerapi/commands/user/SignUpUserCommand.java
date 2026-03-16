@@ -1,8 +1,6 @@
 package com.dunnwr.taskmanagerapi.commands.user;
 
-import com.dunnwr.taskmanagerapi.models.user.Gender;
-
-public record SignUserInCommand(
+public record SignUpUserCommand(
         String firstName,
         String middleName,
         String lastName,

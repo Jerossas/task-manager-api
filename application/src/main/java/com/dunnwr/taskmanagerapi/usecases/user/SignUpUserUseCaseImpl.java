@@ -1,6 +1,6 @@
 package com.dunnwr.taskmanagerapi.usecases.user;
 
-import com.dunnwr.taskmanagerapi.commands.user.SignUserInCommand;
+import com.dunnwr.taskmanagerapi.commands.user.SignUpUserCommand;
 import com.dunnwr.taskmanagerapi.exceptions.EmailAlreadyRegisteredException;
 import com.dunnwr.taskmanagerapi.exceptions.InvalidFieldException;
 import com.dunnwr.taskmanagerapi.models.user.Email;
@@ -10,18 +10,18 @@ import com.dunnwr.taskmanagerapi.models.user.User;
 import com.dunnwr.taskmanagerapi.repositories.UserRepository;
 import com.dunnwr.taskmanagerapi.services.PasswordEncoder;
 
-public class SignUserInUseCaseImpl implements SignUserInUseCase {
+public class SignUpUserUseCaseImpl implements SignUpUserUseCase {
 
     private final PasswordEncoder encoder;
     private final UserRepository userRepository;
 
-    public SignUserInUseCaseImpl(PasswordEncoder encoder, UserRepository userRepository){
+    public SignUpUserUseCaseImpl(PasswordEncoder encoder, UserRepository userRepository){
         this.encoder = encoder;
         this.userRepository = userRepository;
     }
 
     @Override
-    public User execute(SignUserInCommand command){
+    public User execute(SignUpUserCommand command){
 
         if (command.password() == null || command.confirmPassword() == null) {
             throw new InvalidFieldException("password", "Password and confirmation cannot be null.");
