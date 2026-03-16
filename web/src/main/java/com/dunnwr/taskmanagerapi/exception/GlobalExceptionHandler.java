@@ -1,6 +1,7 @@
 package com.dunnwr.taskmanagerapi.exception;
 
 import com.dunnwr.taskmanagerapi.exceptions.EmailAlreadyRegisteredException;
+import com.dunnwr.taskmanagerapi.exceptions.InvalidCredentialsException;
 import com.dunnwr.taskmanagerapi.exceptions.InvalidFieldException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,7 +25,19 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(EmailAlreadyRegisteredException.class)
-    public ResponseEntity<ErrorResponse> handleBusinessLogicException(EmailAlreadyRegisteredException e){
+    public ResponseEntity<ErrorResponse> handleEmailAlreadyRegistered(EmailAlreadyRegisteredException e){
+        ErrorResponse error = new ErrorResponse(
+                null,
+                e.getMessage(),
+                e.getStatusCode(),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(e.getStatusCode()).body(error);
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidSignInCredentials(InvalidCredentialsException e){
         ErrorResponse error = new ErrorResponse(
                 null,
                 e.getMessage(),
