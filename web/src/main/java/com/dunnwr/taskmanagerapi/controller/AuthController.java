@@ -1,7 +1,7 @@
 package com.dunnwr.taskmanagerapi.controller;
 
 import com.dunnwr.taskmanagerapi.commands.user.SignUpUserCommand;
-import com.dunnwr.taskmanagerapi.dto.user.SignUserInRequest;
+import com.dunnwr.taskmanagerapi.dto.user.SignUpUserRequest;
 import com.dunnwr.taskmanagerapi.dto.user.UserResponse;
 import com.dunnwr.taskmanagerapi.models.user.User;
 import com.dunnwr.taskmanagerapi.usecases.user.SignUpUserUseCase;
@@ -25,7 +25,7 @@ public class AuthController {
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<UserResponse> signUpUser(@RequestBody SignUserInRequest request){
+    public ResponseEntity<UserResponse> signUpUser(@RequestBody SignUpUserRequest request){
 
         SignUpUserCommand command = new SignUpUserCommand(
                 request.firstName(),

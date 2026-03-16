@@ -1,6 +1,6 @@
 package com.dunnwr.taskmanagerapi.dto.user;
 
-public record SignUserInRequest(
+public record SignUpUserRequest(
         String firstName,
         String middleName,
         String lastName,
