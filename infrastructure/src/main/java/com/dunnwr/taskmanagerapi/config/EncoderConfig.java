@@ -1,4 +1,4 @@
-package com.dunnwr.taskmanagerapi.springdata.config;
+package com.dunnwr.taskmanagerapi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
