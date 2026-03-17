@@ -1,12 +1,14 @@
 package com.dunnwr.taskmanagerapi.controllers;
 
 import com.dunnwr.taskmanagerapi.commands.task.CreateTaskCommand;
+import com.dunnwr.taskmanagerapi.commands.task.FindAUsersTaskCommand;
 import com.dunnwr.taskmanagerapi.commands.task.ListUsersTasksCommand;
 import com.dunnwr.taskmanagerapi.dto.task.CreateTaskRequest;
 import com.dunnwr.taskmanagerapi.dto.task.TaskResponse;
 import com.dunnwr.taskmanagerapi.models.task.Priority;
 import com.dunnwr.taskmanagerapi.models.task.Task;
 import com.dunnwr.taskmanagerapi.usecases.task.CreateTaskUseCase;
+import com.dunnwr.taskmanagerapi.usecases.task.FindAUsersTaskUseCase;
 import com.dunnwr.taskmanagerapi.usecases.task.ListUsersTasksUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +24,12 @@ public class TaskController {
 
     private final CreateTaskUseCase createTaskUseCase;
     private final ListUsersTasksUseCase listUsersTasksUseCase;
+    private final FindAUsersTaskUseCase findAUsersTaskUseCase;
 
-    public TaskController(CreateTaskUseCase createTaskUseCase, ListUsersTasksUseCase listUsersTasksUseCase){
+    public TaskController(CreateTaskUseCase createTaskUseCase, ListUsersTasksUseCase listUsersTasksUseCase, FindAUsersTaskUseCase findAUsersTaskUseCase){
         this.createTaskUseCase = createTaskUseCase;
         this.listUsersTasksUseCase = listUsersTasksUseCase;
+        this.findAUsersTaskUseCase = findAUsersTaskUseCase;
     }
 
     @PostMapping
@@ -69,5 +73,22 @@ public class TaskController {
                         task.getPriority().name(),
                         task.getDueDate()
                 )).toList());
+    }
+
+    @GetMapping("/{taskId}")
+    public ResponseEntity<TaskResponse> findTask(@PathVariable("taskId") Long taskId, @AuthenticationPrincipal UserDetails userDetails){
+
+        FindAUsersTaskCommand command = new FindAUsersTaskCommand(userDetails.getUsername(), taskId);
+
+        Task task = findAUsersTaskUseCase.execute(command);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new TaskResponse(
+                        task.getId(),
+                        task.getTitle(),
+                        task.getDescription(),
+                        task.getStatus().name(),
+                        task.getPriority().name(),
+                        task.getDueDate()
+                ));
     }
 }

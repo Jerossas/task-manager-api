@@ -1,9 +1,6 @@
 package com.dunnwr.taskmanagerapi.exception;
 
-import com.dunnwr.taskmanagerapi.exceptions.EmailAlreadyRegisteredException;
-import com.dunnwr.taskmanagerapi.exceptions.InvalidCredentialsException;
-import com.dunnwr.taskmanagerapi.exceptions.InvalidFieldException;
-import com.dunnwr.taskmanagerapi.exceptions.UserNotFoundException;
+import com.dunnwr.taskmanagerapi.exceptions.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -51,6 +48,18 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException e){
+        ErrorResponse error = new ErrorResponse(
+                null,
+                e.getMessage(),
+                e.getStatusCode(),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(e.getStatusCode()).body(error);
+    }
+
+    @ExceptionHandler(TaskNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleTaskNotFoundException(TaskNotFoundException e){
         ErrorResponse error = new ErrorResponse(
                 null,
                 e.getMessage(),
