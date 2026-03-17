@@ -5,6 +5,8 @@ import com.dunnwr.taskmanagerapi.repositories.UserRepository;
 import com.dunnwr.taskmanagerapi.services.PasswordEncoder;
 import com.dunnwr.taskmanagerapi.usecases.task.CreateTaskUseCase;
 import com.dunnwr.taskmanagerapi.usecases.task.CreateTaskUseCaseImpl;
+import com.dunnwr.taskmanagerapi.usecases.task.ListUsersTasksUseCase;
+import com.dunnwr.taskmanagerapi.usecases.task.ListUsersTasksUseCaseImpl;
 import com.dunnwr.taskmanagerapi.usecases.user.SignInUserUseCase;
 import com.dunnwr.taskmanagerapi.usecases.user.SignInUserUseCaseImpl;
 import com.dunnwr.taskmanagerapi.usecases.user.SignUpUserUseCase;
@@ -28,5 +30,10 @@ public class UseCaseConfiguration {
     @Bean
     public SignInUserUseCase signInUserUseCase(PasswordEncoder encoder, UserRepository userRepository){
         return new SignInUserUseCaseImpl(userRepository, encoder);
+    }
+
+    @Bean
+    public ListUsersTasksUseCase listUsersTasksUseCase(TaskRepository taskRepository, UserRepository userRepository){
+        return new ListUsersTasksUseCaseImpl(taskRepository, userRepository);
     }
 }

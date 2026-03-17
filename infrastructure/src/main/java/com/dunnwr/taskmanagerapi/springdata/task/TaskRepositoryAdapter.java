@@ -6,6 +6,8 @@ import com.dunnwr.taskmanagerapi.models.task.Task;
 import com.dunnwr.taskmanagerapi.repositories.TaskRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class TaskRepositoryAdapter implements TaskRepository {
 
@@ -39,5 +41,19 @@ public class TaskRepositoryAdapter implements TaskRepository {
                 savedEntity.getUserId(),
                 savedEntity.getDueDate()
         );
+    }
+
+    @Override
+    public List<Task> findAll(){
+        return springDataTaskRepository.findAll().stream()
+                .map(entity -> Task.restore(
+                        entity.getId(),
+                        entity.getTitle(),
+                        entity.getDescription(),
+                        Status.from(entity.getStatus()),
+                        Priority.from(entity.getPriority()),
+                        entity.getUserId(),
+                        entity.getDueDate()
+                )).toList();
     }
 }
