@@ -1,7 +1,7 @@
 package com.dunnwr.taskmanagerapi.controllers;
 
 import com.dunnwr.taskmanagerapi.commands.task.CreateTaskCommand;
-import com.dunnwr.taskmanagerapi.commands.user.ListUsersTasksCommand;
+import com.dunnwr.taskmanagerapi.commands.task.ListUsersTasksCommand;
 import com.dunnwr.taskmanagerapi.dto.task.CreateTaskRequest;
 import com.dunnwr.taskmanagerapi.dto.task.TaskResponse;
 import com.dunnwr.taskmanagerapi.models.task.Priority;
