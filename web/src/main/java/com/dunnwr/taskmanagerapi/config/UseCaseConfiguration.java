@@ -15,27 +15,32 @@ import org.springframework.context.annotation.Configuration;
 public class UseCaseConfiguration {
 
     @Bean
-    public CreateTaskUseCase createTaskUseCase(TaskRepository taskRepository, UserRepository userRepository){
+    public CreateTaskUseCase createTaskUseCase(TaskRepository taskRepository, UserRepository userRepository) {
         return new CreateTaskUseCaseImpl(taskRepository, userRepository);
     }
 
     @Bean
-    public SignUpUserUseCase signUpUserUseCase(PasswordEncoder encoder, UserRepository userRepository){
+    public SignUpUserUseCase signUpUserUseCase(PasswordEncoder encoder, UserRepository userRepository) {
         return new SignUpUserUseCaseImpl(encoder, userRepository);
     }
 
     @Bean
-    public SignInUserUseCase signInUserUseCase(PasswordEncoder encoder, UserRepository userRepository){
+    public SignInUserUseCase signInUserUseCase(PasswordEncoder encoder, UserRepository userRepository) {
         return new SignInUserUseCaseImpl(userRepository, encoder);
     }
 
     @Bean
-    public ListUsersTasksUseCase listUsersTasksUseCase(TaskRepository taskRepository, UserRepository userRepository){
+    public ListUsersTasksUseCase listUsersTasksUseCase(TaskRepository taskRepository, UserRepository userRepository) {
         return new ListUsersTasksUseCaseImpl(taskRepository, userRepository);
     }
 
     @Bean
-    public FindAUsersTaskUseCase findAUsersTaskUseCase(TaskRepository taskRepository, UserRepository userRepository){
+    public FindAUsersTaskUseCase findAUsersTaskUseCase(TaskRepository taskRepository, UserRepository userRepository) {
         return new FindAUsersTaskUseCaseImpl(taskRepository, userRepository);
+    }
+
+    @Bean
+    public EditAUsersTaskUseCase editAUsersTaskUseCase(TaskRepository taskRepository, UserRepository userRepository) {
+        return new EditAUsersTaskUseCaseImpl(taskRepository, userRepository);
     }
 }

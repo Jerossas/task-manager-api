@@ -1,13 +1,15 @@
 package com.dunnwr.taskmanagerapi.controllers;
 
 import com.dunnwr.taskmanagerapi.commands.task.CreateTaskCommand;
+import com.dunnwr.taskmanagerapi.commands.task.EditUsersTaskCommand;
 import com.dunnwr.taskmanagerapi.commands.task.FindAUsersTaskCommand;
 import com.dunnwr.taskmanagerapi.commands.task.ListUsersTasksCommand;
 import com.dunnwr.taskmanagerapi.dto.task.CreateTaskRequest;
+import com.dunnwr.taskmanagerapi.dto.task.EditTaskRequest;
 import com.dunnwr.taskmanagerapi.dto.task.TaskResponse;
-import com.dunnwr.taskmanagerapi.models.task.Priority;
 import com.dunnwr.taskmanagerapi.models.task.Task;
 import com.dunnwr.taskmanagerapi.usecases.task.CreateTaskUseCase;
+import com.dunnwr.taskmanagerapi.usecases.task.EditAUsersTaskUseCase;
 import com.dunnwr.taskmanagerapi.usecases.task.FindAUsersTaskUseCase;
 import com.dunnwr.taskmanagerapi.usecases.task.ListUsersTasksUseCase;
 import org.springframework.http.HttpStatus;
@@ -25,11 +27,18 @@ public class TaskController {
     private final CreateTaskUseCase createTaskUseCase;
     private final ListUsersTasksUseCase listUsersTasksUseCase;
     private final FindAUsersTaskUseCase findAUsersTaskUseCase;
+    private final EditAUsersTaskUseCase editAUsersTaskUseCase;
 
-    public TaskController(CreateTaskUseCase createTaskUseCase, ListUsersTasksUseCase listUsersTasksUseCase, FindAUsersTaskUseCase findAUsersTaskUseCase){
+    public TaskController(
+            CreateTaskUseCase createTaskUseCase,
+            ListUsersTasksUseCase listUsersTasksUseCase,
+            FindAUsersTaskUseCase findAUsersTaskUseCase,
+            EditAUsersTaskUseCase editAUsersTaskUseCase
+    ){
         this.createTaskUseCase = createTaskUseCase;
         this.listUsersTasksUseCase = listUsersTasksUseCase;
         this.findAUsersTaskUseCase = findAUsersTaskUseCase;
+        this.editAUsersTaskUseCase = editAUsersTaskUseCase;
     }
 
     @PostMapping
@@ -38,7 +47,7 @@ public class TaskController {
         CreateTaskCommand command = new CreateTaskCommand(
                 request.title(),
                 request.description(),
-                Priority.from(request.priority()),
+                request.priority(),
                 request.dueDate(),
                 userDetails.getUsername()
         );
@@ -90,5 +99,30 @@ public class TaskController {
                         task.getPriority().name(),
                         task.getDueDate()
                 ));
+    }
+
+    @PatchMapping("/{taskId}")
+    public ResponseEntity<TaskResponse> editTask(@PathVariable("taskId") Long taskId, @RequestBody EditTaskRequest request, @AuthenticationPrincipal UserDetails userDetails) {
+
+        EditUsersTaskCommand command = new EditUsersTaskCommand(
+                taskId,
+                request.title(),
+                request.description(),
+                request.status(),
+                request.priority(),
+                request.dueDate(),
+                userDetails.getUsername()
+        );
+
+        Task task = editAUsersTaskUseCase.execute(command);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new TaskResponse(
+                task.getId(),
+                task.getTitle(),
+                task.getDescription(),
+                task.getStatus().name(),
+                task.getPriority().name(),
+                task.getDueDate()
+        ));
     }
 }

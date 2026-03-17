@@ -2,6 +2,7 @@ package com.dunnwr.taskmanagerapi.usecases.task;
 
 import com.dunnwr.taskmanagerapi.commands.task.CreateTaskCommand;
 import com.dunnwr.taskmanagerapi.exceptions.UserNotFoundException;
+import com.dunnwr.taskmanagerapi.models.task.Priority;
 import com.dunnwr.taskmanagerapi.models.task.Task;
 import com.dunnwr.taskmanagerapi.models.user.Email;
 import com.dunnwr.taskmanagerapi.models.user.User;
@@ -29,7 +30,7 @@ public class CreateTaskUseCaseImpl implements CreateTaskUseCase{
         Task newTask = new Task(
                 input.title(),
                 input.description(),
-                input.priority(),
+                Priority.from(input.priority()),
                 input.dueDate(),
                 user.getId(),
                 LocalDateTime.now()
