@@ -44,8 +44,8 @@ public class TaskRepositoryAdapter implements TaskRepository {
     }
 
     @Override
-    public List<Task> findAll(){
-        return springDataTaskRepository.findAll().stream()
+    public List<Task> findByUserId(Long userId){
+        return springDataTaskRepository.findByUserId(userId).stream()
                 .map(entity -> Task.restore(
                         entity.getId(),
                         entity.getTitle(),

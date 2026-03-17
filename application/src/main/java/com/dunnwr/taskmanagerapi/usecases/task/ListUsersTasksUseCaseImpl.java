@@ -29,7 +29,7 @@ public class ListUsersTasksUseCaseImpl implements ListUsersTasksUseCase {
 
         Long userId = user.getId();
 
-        return taskRepository.findAll().stream()
+        return taskRepository.findByUserId().stream()
                 .filter(task -> Objects.equals(task.getOwnerId(), userId))
                 .toList();
     }
