@@ -9,7 +9,6 @@ import com.dunnwr.taskmanagerapi.repositories.TaskRepository;
 import com.dunnwr.taskmanagerapi.repositories.UserRepository;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ListUsersTasksUseCaseImpl implements ListUsersTasksUseCase {
 
@@ -29,8 +28,6 @@ public class ListUsersTasksUseCaseImpl implements ListUsersTasksUseCase {
 
         Long userId = user.getId();
 
-        return taskRepository.findByUserId().stream()
-                .filter(task -> Objects.equals(task.getOwnerId(), userId))
-                .toList();
+        return taskRepository.findByUserId(userId);
     }
 }
