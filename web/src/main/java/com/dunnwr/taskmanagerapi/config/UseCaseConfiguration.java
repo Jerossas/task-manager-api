@@ -43,4 +43,9 @@ public class UseCaseConfiguration {
     public EditAUsersTaskUseCase editAUsersTaskUseCase(TaskRepository taskRepository, UserRepository userRepository) {
         return new EditAUsersTaskUseCaseImpl(taskRepository, userRepository);
     }
+
+    @Bean
+    public DeleteUsersTaskUseCase deleteUsersTaskUseCase(TaskRepository taskRepository, UserRepository userRepository){
+        return new DeleteUsersTaskUseCaseImpl(taskRepository, userRepository);
+    }
 }

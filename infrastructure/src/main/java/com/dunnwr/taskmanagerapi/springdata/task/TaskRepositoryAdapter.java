@@ -71,4 +71,9 @@ public class TaskRepositoryAdapter implements TaskRepository {
                         entity.getDueDate()
                 ));
     }
+
+    @Override
+    public void deleteById(Long taskId) {
+        springDataTaskRepository.deleteById(taskId);
+    }
 }

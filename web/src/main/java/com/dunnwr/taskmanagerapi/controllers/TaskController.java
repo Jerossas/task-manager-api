@@ -1,17 +1,11 @@
 package com.dunnwr.taskmanagerapi.controllers;
 
-import com.dunnwr.taskmanagerapi.commands.task.CreateTaskCommand;
-import com.dunnwr.taskmanagerapi.commands.task.EditUsersTaskCommand;
-import com.dunnwr.taskmanagerapi.commands.task.FindAUsersTaskCommand;
-import com.dunnwr.taskmanagerapi.commands.task.ListUsersTasksCommand;
+import com.dunnwr.taskmanagerapi.commands.task.*;
 import com.dunnwr.taskmanagerapi.dto.task.CreateTaskRequest;
 import com.dunnwr.taskmanagerapi.dto.task.EditTaskRequest;
 import com.dunnwr.taskmanagerapi.dto.task.TaskResponse;
 import com.dunnwr.taskmanagerapi.models.task.Task;
-import com.dunnwr.taskmanagerapi.usecases.task.CreateTaskUseCase;
-import com.dunnwr.taskmanagerapi.usecases.task.EditAUsersTaskUseCase;
-import com.dunnwr.taskmanagerapi.usecases.task.FindAUsersTaskUseCase;
-import com.dunnwr.taskmanagerapi.usecases.task.ListUsersTasksUseCase;
+import com.dunnwr.taskmanagerapi.usecases.task.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,17 +22,20 @@ public class TaskController {
     private final ListUsersTasksUseCase listUsersTasksUseCase;
     private final FindAUsersTaskUseCase findAUsersTaskUseCase;
     private final EditAUsersTaskUseCase editAUsersTaskUseCase;
+    private final DeleteUsersTaskUseCase deleteUsersTaskUseCase;
 
     public TaskController(
             CreateTaskUseCase createTaskUseCase,
             ListUsersTasksUseCase listUsersTasksUseCase,
             FindAUsersTaskUseCase findAUsersTaskUseCase,
-            EditAUsersTaskUseCase editAUsersTaskUseCase
+            EditAUsersTaskUseCase editAUsersTaskUseCase,
+            DeleteUsersTaskUseCase deleteUsersTaskUseCase
     ){
         this.createTaskUseCase = createTaskUseCase;
         this.listUsersTasksUseCase = listUsersTasksUseCase;
         this.findAUsersTaskUseCase = findAUsersTaskUseCase;
         this.editAUsersTaskUseCase = editAUsersTaskUseCase;
+        this.deleteUsersTaskUseCase = deleteUsersTaskUseCase;
     }
 
     @PostMapping
@@ -99,6 +96,16 @@ public class TaskController {
                         task.getPriority().name(),
                         task.getDueDate()
                 ));
+    }
+
+    @DeleteMapping("/{taskId}")
+    public ResponseEntity<Void> deleteTask(@PathVariable("taskId") Long taskId, @AuthenticationPrincipal UserDetails userDetails) {
+
+        DeleteUsersTaskCommand command = new DeleteUsersTaskCommand(taskId, userDetails.getUsername());
+
+        deleteUsersTaskUseCase.execute(command);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PatchMapping("/{taskId}")
