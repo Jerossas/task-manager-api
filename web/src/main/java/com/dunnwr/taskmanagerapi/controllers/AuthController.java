@@ -76,4 +76,9 @@ public class AuthController {
 
         return ResponseEntity.status(HttpStatus.OK). body(token);
     }
+
+    @PostMapping("/sign-out")
+    public ResponseEntity<Void> signOutUser(){
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
