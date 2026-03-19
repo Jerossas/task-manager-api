@@ -5,14 +5,12 @@ import com.dunnwr.taskmanagerapi.dto.user.EditUserBasicInformationRequest;
 import com.dunnwr.taskmanagerapi.dto.user.UserResponse;
 import com.dunnwr.taskmanagerapi.models.user.User;
 import com.dunnwr.taskmanagerapi.usecases.user.EditUserBasicInformationUseCase;
+import com.dunnwr.taskmanagerapi.usecases.user.GetUserProfileUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Collectors;
 
@@ -21,9 +19,11 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final EditUserBasicInformationUseCase editUserBasicInformationUseCase;
+    private final GetUserProfileUseCase getUserProfileUseCase;
 
-    public UserController(EditUserBasicInformationUseCase editUserBasicInformationUseCase) {
+    public UserController(EditUserBasicInformationUseCase editUserBasicInformationUseCase, GetUserProfileUseCase getUserProfileUseCase) {
         this.editUserBasicInformationUseCase = editUserBasicInformationUseCase;
+        this.getUserProfileUseCase = getUserProfileUseCase;
     }
 
     @PatchMapping
@@ -38,6 +38,25 @@ public class UserController {
         );
 
         User user = editUserBasicInformationUseCase.execute(command);
+
+        UserResponse response = new UserResponse(
+                user.getFirstName(),
+                user.getMiddleName(),
+                user.getLastName(),
+                user.getEmail().getValue(),
+                user.getGender().name(),
+                user.getRoles().stream()
+                        .map(Enum::name)
+                        .collect(Collectors.toSet())
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/my-profile")
+    public ResponseEntity<UserResponse> getUserProfile(@AuthenticationPrincipal UserDetails userDetails) {
+
+        User user = getUserProfileUseCase.execute(userDetails.getUsername());
 
         UserResponse response = new UserResponse(
                 user.getFirstName(),

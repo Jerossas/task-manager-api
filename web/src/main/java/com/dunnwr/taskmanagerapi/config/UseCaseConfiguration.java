@@ -50,4 +50,9 @@ public class UseCaseConfiguration {
     public EditUserBasicInformationUseCase editBasicUserInformationUseCase(UserRepository userRepository) {
         return new EditUserBasicInformationUseCaseImpl(userRepository);
     }
+
+    @Bean
+    public GetUserProfileUseCase getUserProfileUseCase(UserRepository userRepository) {
+        return new GetUserProfileUseCaseImpl(userRepository);
+    }
 }
