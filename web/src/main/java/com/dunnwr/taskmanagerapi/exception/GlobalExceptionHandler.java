@@ -1,6 +1,7 @@
 package com.dunnwr.taskmanagerapi.exception;
 
 import com.dunnwr.taskmanagerapi.exceptions.*;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -68,5 +69,17 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.status(e.getStatusCode()).body(error);
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<ErrorResponse> tokenExpired(ExpiredJwtException e){
+        ErrorResponse error = new ErrorResponse(
+                null,
+                e.getMessage(),
+                403,
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(403).body(error);
     }
 }

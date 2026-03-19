@@ -4,10 +4,7 @@ import com.dunnwr.taskmanagerapi.repositories.TaskRepository;
 import com.dunnwr.taskmanagerapi.repositories.UserRepository;
 import com.dunnwr.taskmanagerapi.services.PasswordEncoder;
 import com.dunnwr.taskmanagerapi.usecases.task.*;
-import com.dunnwr.taskmanagerapi.usecases.user.SignInUserUseCase;
-import com.dunnwr.taskmanagerapi.usecases.user.SignInUserUseCaseImpl;
-import com.dunnwr.taskmanagerapi.usecases.user.SignUpUserUseCase;
-import com.dunnwr.taskmanagerapi.usecases.user.SignUpUserUseCaseImpl;
+import com.dunnwr.taskmanagerapi.usecases.user.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -47,5 +44,10 @@ public class UseCaseConfiguration {
     @Bean
     public DeleteUsersTaskUseCase deleteUsersTaskUseCase(TaskRepository taskRepository, UserRepository userRepository){
         return new DeleteUsersTaskUseCaseImpl(taskRepository, userRepository);
+    }
+
+    @Bean
+    public EditUserBasicInformationUseCase editBasicUserInformationUseCase(UserRepository userRepository) {
+        return new EditUserBasicInformationUseCaseImpl(userRepository);
     }
 }
