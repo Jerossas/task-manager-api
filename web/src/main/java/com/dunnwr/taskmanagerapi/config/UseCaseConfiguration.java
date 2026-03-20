@@ -55,4 +55,9 @@ public class UseCaseConfiguration {
     public GetUserProfileUseCase getUserProfileUseCase(UserRepository userRepository) {
         return new GetUserProfileUseCaseImpl(userRepository);
     }
+
+    @Bean
+    public UpdateUsersPasswordUseCase updateUsersPasswordUseCase(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        return new UpdateUsersPasswordUseCaseImpl(userRepository, passwordEncoder);
+    }
 }
