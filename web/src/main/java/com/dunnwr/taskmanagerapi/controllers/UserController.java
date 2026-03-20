@@ -1,6 +1,7 @@
 package com.dunnwr.taskmanagerapi.controllers;
 
 import com.dunnwr.taskmanagerapi.commands.user.EditUserBasicInformationCommand;
+import com.dunnwr.taskmanagerapi.commands.user.GetUserProfileCommand;
 import com.dunnwr.taskmanagerapi.commands.user.UpdateUsersPasswordCommand;
 import com.dunnwr.taskmanagerapi.dto.user.EditUserBasicInformationRequest;
 import com.dunnwr.taskmanagerapi.dto.user.TokenResponse;
@@ -70,7 +71,9 @@ public class UserController {
     @GetMapping("/my-profile")
     public ResponseEntity<UserResponse> getUserProfile(@AuthenticationPrincipal UserDetails userDetails) {
 
-        User user = getUserProfileUseCase.execute(userDetails.getUsername());
+        GetUserProfileCommand command = new GetUserProfileCommand(userDetails.getUsername());
+
+        User user = getUserProfileUseCase.execute(command);
 
         UserResponse response = new UserResponse(
                 user.getFirstName(),
