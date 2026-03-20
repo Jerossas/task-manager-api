@@ -9,8 +9,6 @@ import com.dunnwr.taskmanagerapi.models.user.User;
 import com.dunnwr.taskmanagerapi.repositories.TaskRepository;
 import com.dunnwr.taskmanagerapi.repositories.UserRepository;
 
-import java.util.Objects;
-
 public class FindAUsersTaskUseCaseImpl implements FindAUsersTaskUseCase {
 
     private final TaskRepository taskRepository;
