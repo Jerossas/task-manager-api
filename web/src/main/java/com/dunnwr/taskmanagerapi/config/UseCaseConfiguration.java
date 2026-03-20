@@ -60,4 +60,9 @@ public class UseCaseConfiguration {
     public UpdateUsersPasswordUseCase updateUsersPasswordUseCase(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return new UpdateUsersPasswordUseCaseImpl(userRepository, passwordEncoder);
     }
+
+    @Bean
+    public DeleteUserUseCase deleteUserUseCase(UserRepository userRepository, TaskRepository taskRepository, PasswordEncoder passwordEncoder){
+        return new DeleteUserUseCaseImpl(userRepository, taskRepository, passwordEncoder);
+    }
 }

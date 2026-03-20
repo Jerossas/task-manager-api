@@ -1,14 +1,13 @@
 package com.dunnwr.taskmanagerapi.controllers;
 
+import com.dunnwr.taskmanagerapi.commands.user.DeleteUserCommand;
 import com.dunnwr.taskmanagerapi.commands.user.EditUserBasicInformationCommand;
 import com.dunnwr.taskmanagerapi.commands.user.GetUserProfileCommand;
 import com.dunnwr.taskmanagerapi.commands.user.UpdateUsersPasswordCommand;
-import com.dunnwr.taskmanagerapi.dto.user.EditUserBasicInformationRequest;
-import com.dunnwr.taskmanagerapi.dto.user.TokenResponse;
-import com.dunnwr.taskmanagerapi.dto.user.UpdatePasswordRequest;
-import com.dunnwr.taskmanagerapi.dto.user.UserResponse;
+import com.dunnwr.taskmanagerapi.dto.user.*;
 import com.dunnwr.taskmanagerapi.models.user.User;
 import com.dunnwr.taskmanagerapi.services.JwtService;
+import com.dunnwr.taskmanagerapi.usecases.user.DeleteUserUseCase;
 import com.dunnwr.taskmanagerapi.usecases.user.EditUserBasicInformationUseCase;
 import com.dunnwr.taskmanagerapi.usecases.user.GetUserProfileUseCase;
 import com.dunnwr.taskmanagerapi.usecases.user.UpdateUsersPasswordUseCase;
@@ -27,17 +26,20 @@ public class UserController {
     private final EditUserBasicInformationUseCase editUserBasicInformationUseCase;
     private final GetUserProfileUseCase getUserProfileUseCase;
     private final UpdateUsersPasswordUseCase updateUsersPasswordUseCase;
+    private final DeleteUserUseCase deleteUserUseCase;
     private final JwtService jwtService;
 
     public UserController(
             EditUserBasicInformationUseCase editUserBasicInformationUseCase,
             GetUserProfileUseCase getUserProfileUseCase,
             UpdateUsersPasswordUseCase updateUsersPasswordUseCase,
+            DeleteUserUseCase deleteUserUseCase,
             JwtService jwtService
     ) {
         this.editUserBasicInformationUseCase = editUserBasicInformationUseCase;
         this.getUserProfileUseCase = getUserProfileUseCase;
         this.updateUsersPasswordUseCase = updateUsersPasswordUseCase;
+        this.deleteUserUseCase = deleteUserUseCase;
         this.jwtService = jwtService;
     }
 
@@ -104,6 +106,19 @@ public class UserController {
         TokenResponse token = new TokenResponse(jwtService.generate(user));
 
         return ResponseEntity.status(HttpStatus.OK). body(token);
+    }
+
+    @DeleteMapping("/delete-user")
+    public ResponseEntity<Void> deleteUser(@RequestBody DeleteUserRequest request, @AuthenticationPrincipal UserDetails userDetails){
+
+        DeleteUserCommand command = new DeleteUserCommand(
+                request.currentPassword(),
+                userDetails.getUsername()
+        );
+
+        deleteUserUseCase.execute(command);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
 }

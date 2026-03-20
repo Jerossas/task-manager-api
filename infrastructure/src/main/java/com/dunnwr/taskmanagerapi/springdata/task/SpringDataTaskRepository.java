@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface SpringDataTaskRepository extends JpaRepository<TaskEntity, Long> {
     List<TaskEntity> findByUserId(Long userId);
     Optional<TaskEntity> findByIdAndUserId(Long id, Long userId);
+    void deleteByUserId(Long userId);
 }

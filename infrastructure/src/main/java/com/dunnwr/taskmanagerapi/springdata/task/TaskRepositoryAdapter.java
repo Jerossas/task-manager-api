@@ -76,4 +76,9 @@ public class TaskRepositoryAdapter implements TaskRepository {
     public void deleteById(Long taskId) {
         springDataTaskRepository.deleteById(taskId);
     }
+
+    @Override
+    public void deleteByUserId(Long userId) {
+        springDataTaskRepository.deleteByUserId(userId);
+    }
 }

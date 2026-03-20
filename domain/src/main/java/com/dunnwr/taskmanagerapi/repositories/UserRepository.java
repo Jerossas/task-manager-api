@@ -10,4 +10,5 @@ public interface UserRepository {
     User save(User user);
     boolean existsByEmail(Email email);
     Optional<User> findByEmail(Email email);
+    void deleteById(Long id);
 }

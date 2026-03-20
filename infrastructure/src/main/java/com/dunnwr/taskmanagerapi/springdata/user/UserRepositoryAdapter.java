@@ -69,6 +69,11 @@ public class UserRepositoryAdapter implements UserRepository, UserDetailsService
     }
 
     @Override
+    public void deleteById(Long id) {
+        springDataUserRepository.deleteById(id);
+    }
+
+    @Override
     public boolean existsByEmail(Email email) {
         return springDataUserRepository.existsByEmail(email.getValue());
     }

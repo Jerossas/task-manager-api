@@ -11,4 +11,5 @@ public interface TaskRepository {
     List<Task> findByUserId(Long userId);
     Optional<Task> findByIdAndUserId(Long taskId, Long userId);
     void deleteById(Long taskId);
+    void deleteByUserId(Long userId);
 }
