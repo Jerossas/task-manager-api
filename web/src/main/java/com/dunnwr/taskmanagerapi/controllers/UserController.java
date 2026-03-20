@@ -108,7 +108,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK). body(token);
     }
 
-    @DeleteMapping("/delete-user")
+    @PostMapping("/delete-user")
     public ResponseEntity<Void> deleteUser(@RequestBody DeleteUserRequest request, @AuthenticationPrincipal UserDetails userDetails){
 
         DeleteUserCommand command = new DeleteUserCommand(
