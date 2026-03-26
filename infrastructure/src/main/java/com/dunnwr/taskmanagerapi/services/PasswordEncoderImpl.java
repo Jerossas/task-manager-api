@@ -1,6 +1,5 @@
 package com.dunnwr.taskmanagerapi.services;
 
-import com.dunnwr.taskmanagerapi.services.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
