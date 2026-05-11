@@ -71,7 +71,7 @@ public class ListUsersTasksUseCaseTest {
                 Task.restore(
                         2L,
                         "Hacer la cena",
-                        "Cocinar pollo a la planca con arvejas",
+                        "Cocinar pollo a la plancha con arvejas",
                         Status.from("new"),
                         Priority.from("high"),
                         1L,
