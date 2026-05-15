@@ -28,6 +28,12 @@ public class SecurityConfiguration {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
+
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
+
                         .requestMatchers("/api/auth/sign-out").authenticated()
                         .requestMatchers("/api/auth/sign-in").anonymous()
                         .requestMatchers("/api/auth/sign-up").anonymous()
