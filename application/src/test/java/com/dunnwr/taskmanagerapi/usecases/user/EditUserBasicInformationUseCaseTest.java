@@ -62,13 +62,16 @@ public class EditUserBasicInformationUseCaseTest {
         when(userRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
 
         User result = editUserBasicInformationUseCase.execute(new EditUserBasicInformationCommand(
-                "Ferley",
-                "Joan",
-                "Mosquera Lozano",
-                "male",
+                "Sofia",
+                "Andrea",
+                "Ramirez",
+                "female",
                 "example@domain.com"
         ));
 
-        assertEquals("Ferley", result.getFirstName());
+        assertEquals("Sofia", result.getFirstName());
+        assertEquals("Andrea", result.getMiddleName());
+        assertEquals("Ramirez", result.getLastName());
+        assertEquals(Gender.FEMALE, result.getGender());
     }
 }
