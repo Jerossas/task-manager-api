@@ -6,3 +6,10 @@ build
 
 # Ignore Kotlin plugin data
 .kotlin
+
+# Ignore IntelliJ IDEA configuration
+.idea/
+
+# Ignore local .env files
+.env.db
+.env.app
