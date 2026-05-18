@@ -1,5 +1,6 @@
 package com.dunnwr.taskmanagerapi.controllers;
 
+import com.dunnwr.taskmanagerapi.api.TaskApi;
 import com.dunnwr.taskmanagerapi.commands.task.*;
 import com.dunnwr.taskmanagerapi.dto.task.CreateTaskRequest;
 import com.dunnwr.taskmanagerapi.dto.task.EditTaskRequest;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/tasks")
-public class TaskController {
+public class TaskController implements TaskApi {
 
     private final CreateTaskUseCase createTaskUseCase;
     private final ListUsersTasksUseCase listUsersTasksUseCase;
