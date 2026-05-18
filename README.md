@@ -68,11 +68,11 @@ La API quedará disponible en `http://localhost:80`
 
 ## Documentación de la API
 
-La API está documentada con Swagger UI. Una vez levantado el proyecto, podés acceder en:
+La API está documentada con Swagger UI. Una vez levantado el proyecto, puedes acceder en:
 
 `http://localhost:80/swagger-ui.html`
 
-Para probar los endpoints protegidos, primero iniciá sesión en `/api/auth/sign-in`, copiá el token retornado y pegalo en el candado de Swagger **sin** el prefijo `Bearer `.
+Para probar los endpoints protegidos, primero inicia sesión en `/api/auth/sign-in`, copia el token retornado y pégalo en el candado de Swagger **sin** el prefijo `Bearer `.
 
 ## Cómo correr los tests
 
