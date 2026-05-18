@@ -1,5 +1,6 @@
 package com.dunnwr.taskmanagerapi.controllers;
 
+import com.dunnwr.taskmanagerapi.api.AuthApi;
 import com.dunnwr.taskmanagerapi.commands.user.SignInUserCommand;
 import com.dunnwr.taskmanagerapi.commands.user.SignUpUserCommand;
 import com.dunnwr.taskmanagerapi.dto.user.SignInUserRequest;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/api/auth")
-public class AuthController {
+public class AuthController implements AuthApi {
 
     private final SignUpUserUseCase signUpUserUseCase;
     private final SignInUserUseCase signInUserUseCase;
