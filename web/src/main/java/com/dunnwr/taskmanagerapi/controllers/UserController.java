@@ -1,5 +1,6 @@
 package com.dunnwr.taskmanagerapi.controllers;
 
+import com.dunnwr.taskmanagerapi.api.UserApi;
 import com.dunnwr.taskmanagerapi.commands.user.DeleteUserCommand;
 import com.dunnwr.taskmanagerapi.commands.user.EditUserBasicInformationCommand;
 import com.dunnwr.taskmanagerapi.commands.user.GetUserProfileCommand;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
-public class UserController {
+public class UserController implements UserApi {
 
     private final EditUserBasicInformationUseCase editUserBasicInformationUseCase;
     private final GetUserProfileUseCase getUserProfileUseCase;
