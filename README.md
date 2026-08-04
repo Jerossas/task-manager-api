@@ -54,6 +54,8 @@ Dentro de la carpeta `deployment/` encontrarás los archivos `.env.db.example` y
 - `JWT_SECRET`: string codificado en Base64 de al menos 32 bytes. Puedes generarlo con: `openssl rand -base64 64`
 - `JWT_EXPIRATION`: tiempo de expiración del token en milisegundos. Ejemplo: `86400000` (24 horas)
 
+> En la misma carpeta de deployments hay un `.env.example`. Debes crear un `.env` y allí también añadir el `POSTGRES_USER=`. Con esto, docker compose podra hacer el health check de la base de datos.
+
 ## Cómo levantar el proyecto
 
 1. Clona el repositorio
