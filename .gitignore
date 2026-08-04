@@ -11,5 +11,6 @@ build
 .idea/
 
 # Ignore local .env files
+.env
 .env.db
 .env.app
